@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 Movers Word Master - Dynamic Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@600;700&display=swap');
+
+        :root {
+            --card-bg: #ffffff;
+            --primary: #ff4757;
+            --secondary: #2ed573;
+            --accent: #ffa502;
+            --text-main: #2f3542;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            color: #ff3838;
+            text-shadow: 3px 3px 0px #fffa65;
+            margin: 5px 0 10px 0;
+            font-size: 2rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .dashboard {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .badge {
+            background: white;
+            padding: 7px 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid #ff4757;
+            color: #ff4757;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 480px;
+            padding: 25px 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 6px solid #ffa502;
+            position: relative;
+        }
+
+        .level-tag {
+            position: absolute;
+            top: -20px;
+            background: #ff4757;
+            color: white;
+            font-family: 'Fredoka One', cursive;
+            padding: 6px 22px;
+            border-radius: 18px;
+            font-size: 1.15rem;
+            box-shadow: 0 5px 10px rgba(255, 71, 87, 0.4);
+            letter-spacing: 1px;
+            border: 3px solid #fff;
+        }
+
+        .timer-box {
+            font-size: 1rem;
+            color: #ea2027;
+            font-weight: 700;
+            margin-top: 10px;
+            margin-bottom: 4px;
+            background: #ffeaa7;
+            padding: 4px 12px;
+            border-radius: 10px;
+        }
+
+        .progress-info {
+            font-size: 0.9rem;
+            color: #0984e3;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .challenge-box {
+            width: 100%;
+            min-height: 130px;
+            background: #f7f1e3;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 18px;
+            border: 3px dashed #ffb142;
+            padding: 12px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .topic-badge {
+            font-size: 0.8rem;
+            background: #ff7979;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .hint-word {
+            font-size: 1.6rem;
+            color: #218c74;
+            font-family: 'Fredoka One', cursive;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+        }
+
+        .desc-text {
+            font-size: 0.95rem;
+            color: #4b6584;
+            font-weight: 700;
+        }
+
+        .input-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            border: 3px solid #dfe4ea;
+            border-radius: 16px;
+            box-sizing: border-box;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s;
+            color: #2f3542;
+            background: #f1f2f6;
+        }
+
+        input[type="text"]:focus {
+            border-color: #2ed573;
+            background: #fff;
+            box-shadow: 0 0 12px rgba(46, 213, 115, 0.3);
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.15rem;
+            font-family: 'Fredoka One', cursive;
+            background: #2ed573;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #20bf6b;
+            transition: transform 0.1s, background 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .btn-action:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #20bf6b;
+        }
+
+        .feedback {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-top: 12px;
+            min-height: 25px;
+            text-align: center;
+        }
+
+        .correct { color: #2ed573; }
+        .incorrect { color: #ff4757; }
+
+        /* Modal thống kê kết quả */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 28px;
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+            border: 6px solid #ff4757;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-content h2 {
+            font-family: 'Fredoka One', cursive;
+            color: #ff4757;
+            font-size: 1.7rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .modal-content p {
+            font-size: 1rem;
+            color: #576574;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .wrong-list {
+            text-align: left;
+            background: #ffeaa7;
+            padding: 10px 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            max-height: 140px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+            color: #d63031;
+            font-weight: 700;
+        }
+        .modal-btn {
+            background: #ffa502;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-family: 'Fredoka One', cursive;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #e67e22;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🌟 Movers Word Master 🌟</h1>
+    
+    <div class="dashboard">
+        <div class="badge" id="scoreBadge">⭐ Điểm: 0</div>
+        <div class="badge" id="totalProgress">📊 Tiến độ: 0/15 câu</div>
+    </div>
+
+    <div class="game-card">
+        <div class="level-tag" id="levelTitle">LEVEL 1</div>
+        <div class="timer-box" id="timerDisplay">⏱️ Thời gian: 15:00</div>
+        <div class="progress-info" id="blockInfo">Block này: 0/5 đúng</div>
+
+        <div class="challenge-box">
+            <div class="topic-badge" id="topicBadge">Chủ đề</div>
+            <div class="hint-word" id="hintWord">_ _ _ _</div>
+            <div class="desc-text" id="descWord">💡 Gợi ý nghĩa tiếng Việt</div>
+        </div>
+
+        <div class="input-section">
+            <input type="text" id="userInput" placeholder="Nhập từ tiếng Anh..." autocomplete="off">
+            <button class="btn-action" onclick="submitAnswer()">Kiểm tra ✨</button>
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <!-- Modal thông báo kết quả / thống kê -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Tuyệt vời! 🎉</h2>
+            <p id="modalDesc">Bảng thống kê kết quả học tập hôm nay của bé:</p>
+            <div class="wrong-list" id="wrongListContainer">
+                <i>Không có từ nào trả lời sai! Quá xuất sắc! 🌟</i>
+            </div>
+            <button class="modal-btn" onclick="restartGame()">Chơi lượt mới 🚀</button>
+        </div>
+    </div>
+
+    <script>
+        // Kho dữ liệu toàn diện tích hợp chuẩn xác từ các chủ đề
+        const masterVocabPool = [
+            // Level 1
+            { word: "friend", desc: "Bạn bè", topic: "1. Friends", level: 1 },
+            { word: "boy", desc: "Bạn nam", topic: "1. Friends", level: 1 },
+            { word: "girl", desc: "Bạn nữ", topic: "1. Friends", level: 1 },
+            { word: "arm", desc: "Cánh tay", topic: "2. Body & Face", level: 1 },
+            { word: "back", desc: "Lưng", topic: "2. Body & Face", level: 1 },
+            { word: "face", desc: "Khuôn mặt", topic: "2. Body & Face", level: 1 },
+            { word: "birthday", desc: "Ngày sinh nhật", topic: "3. Holidays", level: 1 },
+            { word: "party", desc: "Bữa tiệc", topic: "3. Holidays", level: 1 },
+            { word: "present", desc: "Món quà", topic: "3. Holidays", level: 1 },
+            { word: "balloon", desc: "Bóng bay", topic: "3. Holidays", level: 1 },
+            { word: "family", desc: "Gia đình", topic: "4. Family", level: 1 },
+            { word: "mother", desc: "Mẹ", topic: "4. Family", level: 1 },
+            { word: "father", desc: "Bố", topic: "4. Family", level: 1 },
+            { word: "sister", desc: "Chị / em gái", topic: "4. Family", level: 1 },
+            { word: "brother", desc: "Anh / em trai", topic: "4. Family", level: 1 },
+            { word: "blue", desc: "Màu xanh dương", topic: "5. Colours & Shapes", level: 1 },
+            { word: "green", desc: "Màu xanh lá", topic: "5. Colours & Shapes", level: 1 },
+            { word: "coat", desc: "Áo khoác", topic: "6. Clothes", level: 1 },
+            { word: "dress", desc: "Váy đầm", topic: "6. Clothes", level: 1 },
+            { word: "shirt", desc: "Áo sơ mi", topic: "6. Clothes", level: 1 },
+            { word: "shoes", desc: "Giày", topic: "6. Clothes", level: 1 },
+            { word: "alphabet", desc: "Bảng chữ cái", topic: "7. Numbers & Alphabet", level: 1 },
+            { word: "clock", desc: "Đồng hồ treo tường", topic: "8. Time & Date", level: 1 },
+            { word: "morning", desc: "Buổi sáng", topic: "8. Time & Date", level: 1 },
+            { word: "evening", desc: "Buổi tối", topic: "8. Time & Date", level: 1 },
+            { word: "market", desc: "Chợ", topic: "9. Shopping", level: 1 },
+            { word: "money", desc: "Tiền", topic: "9. Shopping", level: 1 },
+            { word: "kitchen", desc: "Phòng bếp", topic: "10. Home", level: 1 },
+            { word: "breakfast", desc: "Bữa sáng", topic: "11. Daily Life", level: 1 },
+            { word: "dinner", desc: "Bữa tối", topic: "11. Daily Life", level: 1 },
+            { word: "sleep", desc: "Ngủ", topic: "11. Daily Life", level: 1 },
+            { word: "apple", desc: "Quả táo", topic: "12. Food & Drinks", level: 1 },
+            { word: "chicken", desc: "Thịt gà", topic: "12. Food & Drinks", level: 1 },
+            { word: "classroom", desc: "Phòng học", topic: "13. School", level: 1 },
+            { word: "teacher", desc: "Giáo viên", topic: "13. School", level: 1 },
+            { word: "pencil", desc: "Bút chì", topic: "13. School", level: 1 },
+            { word: "doll", desc: "Búp bê", topic: "14. Toys", level: 1 },
+            { word: "film", desc: "Bộ phim", topic: "15. Movies", level: 1 },
+            { word: "football", desc: "Bóng đá", topic: "16. Sports", level: 1 },
+            { word: "swim", desc: "Bơi lội", topic: "16. Sports", level: 1 },
+            { word: "song", desc: "Bài hát", topic: "18. Music & Arts", level: 1 },
+            { word: "story", desc: "Câu chuyện", topic: "19. Books", level: 1 },
+            { word: "doctor", desc: "Bác sĩ", topic: "20. Jobs", level: 1 },
+            { word: "monkey", desc: "Con khỉ", topic: "21. Animals", level: 1 },
+            { word: "weather", desc: "Thời tiết", topic: "22. Weather", level: 1 },
+            { word: "phone", desc: "Điện thoại", topic: "24. Electronic Devices", level: 1 },
+            { word: "holiday", desc: "Kỳ nghỉ", topic: "26. Tourism", level: 1 },
+            { word: "plane", desc: "Máy bay", topic: "27. Transport", level: 1 },
+            { word: "train", desc: "Tàu hoả", topic: "27. Transport", level: 1 },
+            { word: "park", desc: "Công viên", topic: "28. Public Places", level: 1 },
+            { word: "happy", desc: "Vui vẻ", topic: "30. Emotions", level: 1 },
+
+            // Level 2
+            { word: "address", desc: "Địa chỉ nhà", topic: "1. Friends", level: 2 },
+            { word: "everyone", desc: "Mọi người", topic: "1. Friends", level: 2 },
+            { word: "beard", desc: "Râu", topic: "2. Body & Face", level: 2 },
+            { word: "shoulder", desc: "Vai", topic: "2. Body & Face", level: 2 },
+            { word: "circle", desc: "Hình tròn", topic: "5. Colours & Shapes", level: 2 },
+            { word: "square", desc: "Hình vuông", topic: "5. Colours & Shapes", level: 2 },
+            { word: "spell", desc: "Đánh vần", topic: "7. Numbers & Alphabet", level: 2 },
+            { word: "price", desc: "Giá cả", topic: "9. Shopping", level: 2 },
+            { word: "balcony", desc: "Ban công", topic: "10. Home", level: 2 },
+            { word: "blanket", desc: "Cái chăn", topic: "10. Home", level: 2 },
+            { word: "lemonade", desc: "Nước chanh", topic: "12. Food & Drinks", level: 2 },
+            { word: "robot", desc: "Người máy", topic: "14. Toys", level: 2 },
+            { word: "cinema", desc: "Rạp chiếu phim", topic: "15. Movies", level: 2 },
+            { word: "tennis", desc: "Quần vợt", topic: "16. Sports", level: 2 },
+            { word: "hobby", desc: "Sở thích", topic: "17. Hobbies", level: 2 },
+            { word: "picnic", desc: "Đi dã ngoại", topic: "17. Hobbies", level: 2 },
+            { word: "guitar", desc: "Đàn ghi-ta", topic: "18. Music & Arts", level: 2 },
+            { word: "piano", desc: "Đàn piano", topic: "18. Music & Arts", level: 2 },
+            { word: "library", desc: "Th thư viện", topic: "19. Books", level: 2 },
+            { word: "nurse", desc: "Y tá", topic: "20. Jobs", level: 2 },
+            { word: "farmer", desc: "Nông dân", topic: "20. Jobs", level: 2 },
+            { word: "panda", desc: "Gấu trúc", topic: "21. Animals", level: 2 },
+            { word: "parrot", desc: "Con vẹt", topic: "21. Animals", level: 2 },
+            { word: "rainbow", desc: "Cầu vồng", topic: "22. Weather", level: 2 },
+            { word: "snow", desc: "Tuyết", topic: "22. Weather", level: 2 },
+            { word: "mountain", desc: "Ngọn núi", topic: "23. Ecosystem", level: 2 },
+            { word: "river", desc: "Dòng sông", topic: "23. Ecosystem", level: 2 },
+            { word: "computer", desc: "Máy tính", topic: "24. Electronic Devices", level: 2 },
+            { word: "paper", desc: "Giấy", topic: "25. Materials", level: 2 },
+            { word: "hotel", desc: "Khách sạn", topic: "26. Tourism", level: 2 },
+            { word: "airport", desc: "Sân bay", topic: "27. Transport", level: 2 },
+            { word: "hospital", desc: "Bệnh viện", topic: "28. Public Places", level: 2 },
+            { word: "supermarket", desc: "Siêu thị", topic: "28. Public Places", level: 2 },
+            { word: "angry", desc: "Tức giận", topic: "30. Emotions", level: 2 },
+            { word: "beautiful", desc: "Xinh đẹp", topic: "30. Emotions", level: 2 },
+
+            // Level 3
+            { word: "jungle", desc: "Rừng rậm", topic: "23. Ecosystem", level: 3 },
+            { word: "plastic", desc: "Nhựa", topic: "25. Materials", level: 3 },
+            { word: "passport", desc: "Hộ chiếu", topic: "26. Tourism", level: 3 },
+            { word: "medicine", desc: "Thuốc", topic: "29. Health", level: 3 },
+            { word: "stomach ache", desc: "Đau bụng", topic: "29. Health", level: 3 }
+        ];
+
+        let currentLevel = 1;
+        let totalQuestionsAnswered = 0; 
+        let blockCount = 0;       
+        let blockCorrectCount = 0; 
+        let score = 0;
+        let currentWordObj = {};
+        let wrongAnswersList = []; 
+
+        let sessionVocabPool = {}; 
+        let timeLeft = 15 * 60;     
+
+        // Hàm xáo trộn mảng ngẫu nhiên (Fisher-Yates)
+        function shuffleArray(array) {
+            let arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // Khởi tạo phiên chơi mới: xáo trộn toàn bộ kho từ vựng mỗi khi mở/chơi lại
+        function initGameSession() {
+            sessionVocabPool = {
+                1: shuffleArray(masterVocabPool.filter(i => i.level === 1)),
+                2: shuffleArray(masterVocabPool.filter(i => i.level === 2)),
+                3: shuffleArray(masterVocabPool.filter(i => i.level === 3))
+            };
+            currentLevel = 1;
+            totalQuestionsAnswered = 0;
+            blockCount = 0;
+            blockCorrectCount = 0;
+            score = 0;
+            wrongAnswersList = [];
+            timeLeft = 15 * 60;
+        }
+
+        const timerInterval = setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                let mins = Math.floor(timeLeft / 60);
+                let secs = timeLeft % 60;
+                document.getElementById("timerDisplay").textContent = `⏱️ Thời gian: ${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                
+                if (timeLeft === 0) {
+                    endGame("⏰ Đã hết thời gian 15 phút luyện tập hôm nay!");
+                }
+            }
+        }, 1000);
+
+        function startNewQuestion() {
+            if (totalQuestionsAnswered >= 15) {
+                endGame("🎉 Chúc mừng bé đã hoàn thành xuất sắc toàn bộ 15 câu hỏi của ngày hôm nay!");
+                return;
+            }
+
+            let pool = sessionVocabPool[currentLevel];
+            if (!pool || pool.length === 0) {
+                // Nếu hết từ ở level này, tự xáo trộn lại để tiếp tục lặp lại các từ mới cho các lượt chơi tiếp theo
+                sessionVocabPool[currentLevel] = shuffleArray(masterVocabPool.filter(i => i.level === currentLevel));
+                pool = sessionVocabPool[currentLevel];
+            }
+
+            // Lấy từ vựng tiếp theo từ mảng đã xáo trộn ngẫu nhiên
+            currentWordObj = pool.shift(); 
+
+            document.getElementById("levelTitle").textContent = `LEVEL ${currentLevel}`;
+            document.getElementById("totalProgress").textContent = `📊 Tiến độ: ${totalQuestionsAnswered}/15 câu`;
+            document.getElementById("blockInfo").textContent = `Block này: ${blockCount}/5 đúng`;
+            document.getElementById("topicBadge").textContent = `📚 ${currentWordObj.topic}`;
+            document.getElementById("hintWord").textContent = generateHintMask(currentWordObj.word);
+            document.getElementById("descWord").textContent = `💡 Gợi ý nghĩa: "${currentWordObj.desc}"`;
+            
+            document.getElementById("userInput").value = "";
+            document.getElementById("userInput").disabled = false;
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("userInput").focus();
+        }
+
+        function generateHintMask(word) {
+            let masked = "";
+            for (let i = 0; i < word.length; i++) {
+                if (word[i] === ' ') {
+                    masked += "  ";
+                } else {
+                    masked += "_ ";
+                }
+            }
+            return masked.trim();
+        }
+
+        function submitAnswer() {
+            const userVal = document.getElementById("userInput").value.trim().toLowerCase();
+            const correctVal = currentWordObj.word.toLowerCase();
+            const feedbackEl = document.getElementById("feedback");
+
+            if (userVal === "") {
+                feedbackEl.textContent = "⚠️ Bé hãy nhập từ tiếng Anh vào ô trống nhé!";
+                feedbackEl.className = "feedback incorrect";
+                return;
+            }
+
+            blockCount++;
+            totalQuestionsAnswered++;
+
+            if (userVal === correctVal) {
+                feedbackEl.textContent = "🎉 Chính xác tuyệt vời! +10 điểm!";
+                feedbackEl.className = "feedback correct";
+                score += 10;
+                blockCorrectCount++;
+            } else {
+                feedbackEl.textContent = `❌ Chưa đúng rồi! Đáp án chuẩn là: "${currentWordObj.word}"`;
+                feedbackEl.className = "feedback incorrect";
+                wrongAnswersList.push({
+                    word: currentWordObj.word,
+                    desc: currentWordObj.desc,
+                    userAnswer: userVal
+                });
+            }
+
+            document.getElementById("scoreBadge").textContent = `⭐ Điểm: ${score}`;
+            document.getElementById("totalProgress").textContent = `📊 Tiến độ: ${totalQuestionsAnswered}/15 câu`;
+            document.getElementById("blockInfo").textContent = `Block này: ${blockCorrectCount}/5 đúng`;
+
+            document.getElementById("userInput").disabled = true;
+
+            setTimeout(() => {
+                if (blockCount === 5) {
+                    if (blockCorrectCount === 5 && currentLevel < 3) {
+                        currentLevel++; 
+                    }
+                    blockCount = 0;
+                    blockCorrectCount = 0;
+                }
+                startNewQuestion();
+            }, 1600);
+        }
+
+        function endGame(titleMessage) {
+            clearInterval(timerInterval);
+            const modal = document.getElementById("resultModal");
+            document.getElementById("modalTitle").textContent = titleMessage;
+            
+            let wrongContainer = document.getElementById("wrongListContainer");
+            if (wrongAnswersList.length === 0) {
+                wrongContainer.innerHTML = `🌟 <b>Tuyệt hảo!</b> Bé không làm sai câu nào cả, đạt điểm số tuyệt đối <b>${score} điểm</b>!`;
+            } else {
+                let html = `<b>Danh sách các từ bé cần ôn tập lại (${wrongAnswersList.length} từ):</b><ul style="margin: 5px 0 0 20px; padding: 0;">`;
+                wrongAnswersList.forEach(item => {
+                    html += `<li><b>${item.word}</b> (${item.desc}) - Bé gõ: <span style="color:red;">${item.userAnswer || 'bỏ trống'}</span></li>`;
+                });
+                html += `</ul>`;
+                wrongContainer.innerHTML = html;
+            }
+
+            modal.style.display = "flex";
+        }
+
+        function restartGame() {
+            document.getElementById("resultModal").style.display = "none";
+            initGameSession();
+            startNewQuestion();
+        }
+
+        document.getElementById("userInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                submitAnswer();
+            }
+        });
+
+        // Khởi động phiên làm việc mới
+        initGameSession();
+        startNewQuestion();
+    </script>
+</body>
+</html>
